@@ -36,7 +36,7 @@ int main(int argc, char** argv)
 	Mat output(in.rows * 2, in.cols * 2, CV_8UC3);
 	split(output, outChannel);
 
-	// Reduce the colorspace
+	// Initialize output pixels
 	for (int y = in.rows-1; y > 0; y--) {
 		for (int x = in.cols-1; x > 0 ; x--) {
 			outChannel[0].at<uchar>(y * 2, x * 2) = channel[0].at<uchar>(y, x);
@@ -82,8 +82,10 @@ int main(int argc, char** argv)
 	}
 
 	/*-----------------OUTPUT 2------------------*/
+
 	split(output, outChannel);
 
+	// Initialize output pixels
 	for (int y = 0; y < output.rows - 1; y += 2) {
 		for (int x = 1; x < output.cols; x += 2) {
 			if (x == output.cols - 1) {
