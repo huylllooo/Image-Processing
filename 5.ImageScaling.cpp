@@ -37,8 +37,8 @@ int main(int argc, char** argv)
 	split(output, outChannel);
 
 	// Initialize output pixels
-	for (int y = in.rows-1; y > 0; y--) {
-		for (int x = in.cols-1; x > 0 ; x--) {
+	for (int y = in.rows-1; y >= 0; y--) {
+		for (int x = in.cols-1; x >= 0 ; x--) {
 			outChannel[0].at<uchar>(y * 2, x * 2) = channel[0].at<uchar>(y, x);
 			outChannel[1].at<uchar>(y * 2, x * 2) = channel[1].at<uchar>(y, x);
 			outChannel[2].at<uchar>(y * 2, x * 2) = channel[2].at<uchar>(y, x);
@@ -119,12 +119,13 @@ int main(int argc, char** argv)
 	merge(outChannel, 3, output);
 	// Display output image
 	imshow("Output2", output);
-
+	pyrUp(in, in);
+	imshow("Test", in );
 	// Specify compression quality
 	params.push_back(CV_IMWRITE_JPEG_QUALITY);
 	params.push_back(100);
 
-
+	saveImg = imwrite(argv[3], output, params);
 	if (!saveImg) {
 		cout << "ERROR : Failed to save the image" << endl;
 	}

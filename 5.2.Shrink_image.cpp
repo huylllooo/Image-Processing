@@ -42,16 +42,17 @@ int main(int argc, char** argv)
 	// Initialize output pixels
 	for (int y = 0; y < output.rows; y += 1) {
 		for (int x = 0; x < output.cols; x += 1) {
-			outChannel[0].at<uchar>(y, x) = 0;
-			outChannel[1].at<uchar>(y, x) = 0;
-			outChannel[2].at<uchar>(y, x) = 0;
+			int r=0, g=0, b=0;	// avoid overloading
 			for (int i = 0; i < scale; i++) {
 				for (int j = 0; j < scale; j++) {
-					outChannel[0].at<uchar>(y, x) += channel[0].at<uchar>(y * scale + i, x * scale + j) / scale / scale;
-					outChannel[1].at<uchar>(y, x) += channel[1].at<uchar>(y * scale + i, x * scale + j) / scale / scale;
-					outChannel[2].at<uchar>(y, x) += channel[2].at<uchar>(y * scale + i, x * scale + j) / scale / scale;
+					b += channel[0].at<uchar>(y * scale + i, x * scale + j);
+					g += channel[1].at<uchar>(y * scale + i, x * scale + j);
+					r += channel[2].at<uchar>(y * scale + i, x * scale + j);
 				}
 			}
+			outChannel[0].at<uchar>(y, x) = b / scale / scale;
+			outChannel[1].at<uchar>(y, x) = g / scale / scale;
+			outChannel[2].at<uchar>(y, x) = r / scale / scale;
 			
 		}
 	}
